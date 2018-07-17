@@ -1,0 +1,27 @@
+version: '3.1'
+
+services:
+
+  drupal:
+    image: drupal
+    container_name: simple-drupal
+    ports:
+      - 9099:80
+    volumes:
+      - ./modules:/var/www/html/modules
+      - ./profiles:/var/www/html/profiles
+      - ./themes:/var/www/html/themes
+      - ./sites:/var/www/html/sites
+    restart: always
+
+  postgres:
+    container_name: simple-drupal-db
+    image: postgres:alpine
+    env_file:
+      - ./db.env
+    volumes:
+      - sdddbdata:/var/lib/postgresql/data
+    restart: always
+
+volumes:
+  sdddbdata:
